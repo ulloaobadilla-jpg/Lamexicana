@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "styles.css", "use": "@vercel/static" }
+  ],
+  "installCommand": "",
+  "buildCommand": "",
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
