@@ -370,6 +370,27 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
   .admin-toggle { left: 12px; right: auto; }
 }
 
+/* Additional mobile tweaks: compact circular nav buttons, admin static transparent */
+@media (max-width: 560px) {
+  .site-header { padding-left: 12px; }
+  .main-nav { justify-content: flex-start; margin-left: 8px; }
+  .main-nav a, .nav-menu-trigger {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; padding: 0; border-radius: 50%;
+    font-size: 10px !important; line-height: 1; text-align: center;
+    white-space: normal; overflow: hidden; text-overflow: ellipsis;
+    background: transparent; border: 0; color: inherit;
+  }
+
+  /* Make admin toggle static and transparent in the flow on very small screens */
+  .admin-toggle { position: static !important; width: auto !important; height: auto !important; border-radius: 12px !important; padding: 8px 10px !important; background: transparent !important; box-shadow: none !important; color: inherit !important; opacity: .95 !important; }
+
+  /* Reinforce hero slides visibility */
+  .hero-image-wrap { min-height: 180px; max-height: 46vh; }
+  .hero-slide { position: relative !important; display: block !important; height: auto !important; opacity: 1 !important; transform: none !important; }
+  .hero-slide img { width: 100% !important; height: auto !important; object-fit: contain !important; object-position: top center !important; max-height: 46vh !important; }
+}
+
 /* Ensure the top promo/trust stripe and hero note scale and wrap on small screens */
 @media (max-width: 560px) {
   .promo-bar { font-size: 12px !important; line-height: 1.25 !important; padding: 8px 10px !important; text-align: center !important; align-items: center !important; flex-wrap: wrap !important; }
