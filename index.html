@@ -706,25 +706,7 @@
     </div>
   </aside>
   <script>
-    (function(){
-      try{
-        const panel = document.createElement('div');
-        panel.id = 'debug-panel';
-        panel.style = 'position:fixed;bottom:0;left:0;right:0;max-height:35vh;overflow:auto;background:#fff6f6;border-top:2px solid #ff4d4d;padding:8px;z-index:99999;font-family:monospace;font-size:13px;color:#111';
-        panel.hidden = true;
-        document.addEventListener('DOMContentLoaded', ()=>{ document.body.appendChild(panel); });
-        window.addEventListener('error', (e) => {
-          panel.hidden = false;
-          panel.textContent = 'ERROR: ' + (e && e.message ? e.message : String(e));
-          console.error(e.error || e.message || e);
-        });
-        window.addEventListener('unhandledrejection', (ev) => {
-          panel.hidden = false;
-          panel.textContent = 'UNHANDLED REJECTION: ' + (ev.reason && ev.reason.message ? ev.reason.message : String(ev.reason));
-          console.error(ev.reason || ev);
-        });
-      }catch(e){console.error('debug panel init failed', e)}
-    })();
+    // Debug panel removed for production
   </script>
   <script src="script.js?v=7"></script>
 </body>
