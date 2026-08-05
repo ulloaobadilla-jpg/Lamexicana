@@ -1,4 +1,4 @@
-# La Mexicana Pucón
+# Lamexicana
 
 Sitio estático con backend para integrar pasarelas de pago reales.
 
