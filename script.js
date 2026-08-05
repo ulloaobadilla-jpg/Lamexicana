@@ -732,6 +732,8 @@ function setCartStep(step) {
 
 let activeCategory = "Todos";
 renderCategoryCards();
+// render products initially so catalog is visible on first load
+renderProducts(activeCategory);
 if (menuSubmenu) {
   const categories = getEffectiveMenuCategories();
   menuSubmenu.innerHTML = categories.map((category) => `
