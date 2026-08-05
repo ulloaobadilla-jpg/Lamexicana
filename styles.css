@@ -391,6 +391,20 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
   .hero-slide img { width: 100% !important; height: auto !important; object-fit: contain !important; object-position: top center !important; max-height: 46vh !important; }
 }
 
+/* Hide secondary nav links on very small screens, make logo bigger and left-aligned, cart on right */
+@media (max-width: 560px) {
+  .main-nav a#nav-story-label, .main-nav a#nav-contact-label { display: none !important; }
+  .brand { display: block; margin-right: auto; }
+  .brand-logo { height: 64px !important; max-width: 60%; width: auto !important; margin-left: 6px; }
+  .site-header { display: flex; align-items: center; gap: 8px; }
+  .site-header .cart-button { margin-left: auto; }
+
+  /* Make hero a horizontal scroller to show all images on mobile */
+  .hero-image-wrap { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+  .hero-slide { min-width: 86%; flex: 0 0 86%; scroll-snap-align: center; position: relative !important; height: auto !important; }
+  .hero-slide img { width: 100% !important; height: auto !important; object-fit: cover !important; object-position: center top !important; max-height: 46vh !important; border-radius: 18px; }
+}
+
 /* Ensure the top promo/trust stripe and hero note scale and wrap on small screens */
 @media (max-width: 560px) {
   .promo-bar { font-size: 12px !important; line-height: 1.25 !important; padding: 8px 10px !important; text-align: center !important; align-items: center !important; flex-wrap: wrap !important; }
