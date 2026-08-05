@@ -35,7 +35,7 @@ button { cursor: pointer; }
 body.cart-is-open .site-header { height: 54px; left: calc(50% - 8px); padding: 8px 18px; transform: translateX(-50%); width: min(1080px, calc(100% - 430px)); }
 .site-header::before { background: linear-gradient(105deg, rgba(255, 255, 255, .38), transparent 38%); border-radius: inherit; content: ""; inset: 1px; pointer-events: none; position: absolute; z-index: 0; }
 .brand { align-items: center; display: flex; font-size: 18px; font-weight: 700; gap: 10px; letter-spacing: .02em; }
-.brand-logo { border-radius: 10px; display: block; height: 112px; object-fit: contain; width: 320px; }
+.brand-logo { border-radius: 10px; display: block; height: 140px; object-fit: contain; width: 380px; }
 .site-header .brand { left: -36px; position: absolute; top: 58%; transform: translateY(-50%); }
 .site-header .main-nav, .site-header .cart-button { position: relative; z-index: 1; }
 .brand em { color: var(--coral); font-family: var(--serif); font-weight: 500; }
@@ -128,7 +128,7 @@ h1 i, h2 i { color: var(--coral); font-style: italic; }
 .product-card { backdrop-filter: blur(12px); background: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(255, 247, 234, .9)); border: 1px solid rgba(23, 75, 59, .12); border-radius: 24px; box-shadow: 0 16px 36px rgba(23, 75, 59, .09); min-width: 0; overflow: hidden; padding-bottom: 16px; transition: box-shadow .28s ease, transform .28s ease, border-color .28s ease; }
 .product-card:hover { box-shadow: 0 22px 44px rgba(23, 75, 59, .14); border-color: rgba(200, 61, 50, .24); transform: translateY(-6px) scale(1.01); }
 .product-image { background: #e4ddd0; height: 295px; overflow: hidden; position: relative; }
-.product-image img { height: 100%; object-fit: cover; transition: transform .45s cubic-bezier(.2, .8, .2, 1), filter .45s ease; width: 100%; }
+.product-image img { height: 100%; object-fit: contain; object-position: center; transition: transform .45s cubic-bezier(.2, .8, .2, 1), filter .45s ease; width: 100%; }
 .product-card:hover img { transform: scale(1.045); filter: saturate(1.05) contrast(1.02); }.product-tag { background: rgba(255, 253, 247, .92); backdrop-filter: blur(8px); border: 1px solid rgba(23, 75, 59, .12); border-radius: 999px; font-size: 10px; left: 12px; padding: 6px 10px; position: absolute; text-transform: uppercase; top: 12px; }.product-info { padding: 14px 15px 0; }.product-info h3 { font-family: var(--serif); font-size: 20px; font-weight: 600; margin: 0 0 7px; }.product-meta { align-items: center; display: flex; justify-content: space-between; gap: 10px; }.product-meta span { background: rgba(23, 75, 59, .06); border-radius: 999px; color: var(--muted); font-size: 12px; padding: 6px 10px; }.add-button { background: linear-gradient(135deg, #1f694f, #2e8b57); border: 0; border-radius: 999px; color: white; font-size: 12px; font-weight: 700; padding: 8px 12px; box-shadow: 0 8px 16px rgba(31, 105, 79, .16); }.add-button:hover { background: linear-gradient(135deg, #2a8d5f, #1f694f); color: white; }
 .add-button.is-added { background: linear-gradient(135deg, #c83d32, #a92f2a); color: white; transform: scale(1.04); }
 .add-button.is-added::after { animation: checkPop .45s ease; content: "✓"; display: inline-block; margin-left: 8px; }
@@ -212,6 +212,16 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
 .admin-panel-main { display: flex; flex-direction: column; gap: 16px; }
 .admin-settings-actions { align-items: center; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
 .admin-panel-content { position: relative; }
+.site-header #cart-button, #cart-button, .cart-button { color: #fff !important; }
+.cart-button, .cart-button * { color: #fff !important; }
+.cart-button .cart-icon, .cart-button .cart-icon path { stroke: #fff !important; fill: #fff !important; }
+.cart-button .cart-icon circle { fill: #fff !important; }
+
+/* Ensure product and hero images fit their frames on small screens */
+@media (max-width: 760px) {
+  .product-image img, .hero-slide img, .story-image img, .product-modal-image img { object-fit: contain !important; object-position: center !important; height: auto !important; max-height: 46vh; width: 100% !important; }
+  .brand-logo { height: 96px !important; width: auto !important; max-width: 60%; }
+}
 .admin-tab-panel { display: block; }
 .admin-tab-panel[hidden] { display: none !important; }
 .admin-tab-empty[hidden] { display: none !important; }
