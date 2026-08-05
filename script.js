@@ -394,6 +394,14 @@ function setupRevealAnimations() {
   const revealTargets = document.querySelectorAll(".reveal");
   if (!revealTargets.length) return;
 
+  // On narrow screens, avoid relying on IntersectionObserver (mobile scrolling quirks)
+  // and make reveal targets visible immediately so categories/products appear.
+  const isNarrow = typeof window !== 'undefined' && (window.innerWidth || document.documentElement.clientWidth) <= 760;
+  if (isNarrow) {
+    revealTargets.forEach((t) => t.classList.add('is-visible'));
+    return;
+  }
+
   const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
