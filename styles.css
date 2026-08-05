@@ -357,6 +357,19 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
   .main-nav a, .nav-menu-trigger { font-size: 12px; padding: 6px 8px; max-width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 
+@media (max-width: 560px) {
+  .main-nav a, .nav-menu-trigger { font-size: 11px !important; padding: 4px 6px !important; }
+  .main-nav { gap: 4px; }
+
+  /* Hero: make slides behave consistently on very small screens */
+  .hero-image-wrap { min-height: 180px; max-height: 46vh; }
+  .hero-slide { position: relative !important; height: auto !important; opacity: 1 !important; transform: none !important; }
+  .hero-slide img { width: 100% !important; height: auto !important; object-fit: contain !important; object-position: top center !important; max-height: 46vh !important; display: block !important; }
+
+  /* Move admin toggle to bottom-left and keep it small */
+  .admin-toggle { left: 12px; right: auto; }
+}
+
 /* Ensure the top promo/trust stripe and hero note scale and wrap on small screens */
 @media (max-width: 560px) {
   .promo-bar { font-size: 12px !important; line-height: 1.25 !important; padding: 8px 10px !important; text-align: center !important; align-items: center !important; flex-wrap: wrap !important; }
