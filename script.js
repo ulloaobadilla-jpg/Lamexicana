@@ -2278,8 +2278,32 @@ renderProducts();
 renderCart();
 // Do not auto-logout on load; preserve persisted admin state if present
 
+// Hide admin toggle by default and enable reveal-on-5-clicks on logo
 if (adminToggleButton) {
-  adminToggleButton.addEventListener("click", openAdminPanel);
+  adminToggleButton.style.display = 'none';
+}
+
+const brandLogoEl = document.querySelector('.brand-logo');
+if (brandLogoEl) {
+  let clickCount = 0;
+  let clickTimer = null;
+  brandLogoEl.addEventListener('click', () => {
+    clickCount += 1;
+    if (clickTimer) clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => { clickCount = 0; }, 900);
+    if (clickCount >= 5) {
+      // toggle admin panel visibility and show the button briefly
+      clickCount = 0;
+      if (adminPanel) {
+        adminPanel.hidden = !adminPanel.hidden;
+        adminPanel.style.display = adminPanel.hidden ? 'none' : 'block';
+        adminPanel.setAttribute('aria-hidden', adminPanel.hidden ? 'true' : 'false');
+      }
+      if (adminToggleButton) {
+        adminToggleButton.style.display = adminPanel.hidden ? 'none' : 'inline-flex';
+      }
+    }
+  });
 }
 
 if (closeAdminPanelButton) {
