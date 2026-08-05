@@ -14,6 +14,15 @@
   --sans: "DM Sans", Arial, sans-serif;
 }
 
+/* Overrides: Mobile header/nav fixes — keep logo left and show nav as horizontal scroll */
+@media (max-width: 760px) {
+  .site-header { padding-left: 14px !important; }
+  .site-header .brand { position: static !important; left: auto !important; transform: none !important; display: flex; align-items: center; }
+  .main-nav { display: flex !important; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; align-items: center; }
+  .main-nav a, .nav-menu-trigger { padding: 6px 10px; font-size: 12px; white-space: nowrap; }
+  .brand-logo { height: 56px; width: auto; max-width: 48%; }
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; overflow-x: hidden; scroll-padding-top: 140px; }
 body { margin: 0; color: var(--ink); background: radial-gradient(circle at 8% 12%, rgba(242, 201, 76, .28), transparent 28%), radial-gradient(circle at 92% 45%, rgba(200, 61, 50, .12), transparent 24%), var(--cream); font-family: var(--sans); overflow-x: hidden; padding-top: 110px; -webkit-text-size-adjust: 100%; }
