@@ -717,17 +717,35 @@ function openProductModal(productId) {
   document.querySelector("#modal-product-price").textContent = money(selectedProduct.price);
   document.querySelector("#product-quantity").textContent = selectedQuantity;
   productModal.classList.toggle("sauce-detail", selectedProduct.category === "Salsas");
-  productModal.classList.add("open");
-  productModal.setAttribute("aria-hidden", "false");
-  productModalOverlay.hidden = false;
+  // show overlay and modal with a smooth animation
   document.body.classList.add('product-open');
+  productModalOverlay.hidden = false;
+  // ensure overlay becomes visible (will transition via CSS)
+  productModalOverlay.classList.add('visible');
+  // prepare modal for animation
+  productModal.classList.remove('closing');
+  // force reflow then add open to trigger transition
+  void productModal.offsetWidth;
+  productModal.classList.add('open');
+  productModal.setAttribute('aria-hidden', 'false');
 }
 
 function closeProductModal() {
-  productModal.classList.remove("open");
-  productModal.setAttribute("aria-hidden", "true");
-  productModalOverlay.hidden = true;
-  document.body.classList.remove('product-open');
+  // animate closing: remove open, add closing, hide overlay after transition
+  productModal.classList.remove('open');
+  productModal.classList.add('closing');
+  productModal.setAttribute('aria-hidden', 'true');
+  // start overlay fade-out
+  productModalOverlay.classList.remove('visible');
+
+  const onTransitionEnd = (e) => {
+    if (e.target !== productModal) return;
+    productModal.removeEventListener('transitionend', onTransitionEnd);
+    productModal.classList.remove('closing');
+    productModalOverlay.hidden = true;
+    document.body.classList.remove('product-open');
+  };
+  productModal.addEventListener('transitionend', onTransitionEnd);
 }
 
 function openCart() {
