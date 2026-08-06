@@ -722,6 +722,14 @@ function openProductModal(productId, sourceEl) {
   productModalOverlay.hidden = false;
   // ensure overlay becomes visible (will transition via CSS)
   productModalOverlay.classList.add('visible');
+  // ensure backdrop-filter is applied (some browsers drop it during transitions)
+  try {
+    productModalOverlay.style.backdropFilter = 'blur(8px)';
+    productModalOverlay.style.webkitBackdropFilter = 'blur(8px)';
+    productModalOverlay.style.opacity = '1';
+  } catch (e) {
+    /* ignore */
+  }
   // prepare modal for animation
   productModal.classList.remove('closing');
   // If a source element was provided, animate from its bounds (drop/gota effect)
@@ -772,6 +780,12 @@ function closeProductModal() {
     productModal.removeEventListener('transitionend', onTransitionEnd);
     productModal.classList.remove('closing');
     productModalOverlay.hidden = true;
+    // clear inline backdrop styles
+    try {
+      productModalOverlay.style.backdropFilter = '';
+      productModalOverlay.style.webkitBackdropFilter = '';
+      productModalOverlay.style.opacity = '';
+    } catch (err) {}
     document.body.classList.remove('product-open');
   };
   productModal.addEventListener('transitionend', onTransitionEnd);
