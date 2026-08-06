@@ -695,7 +695,7 @@ function saveOrder(order) {
     });
 }
 
-function openProductModal(productId) {
+function openProductModal(productId, sourceEl) {
   selectedProduct = products.find((product) => product.id === productId);
   if (!selectedProduct) return;
 
@@ -724,9 +724,38 @@ function openProductModal(productId) {
   productModalOverlay.classList.add('visible');
   // prepare modal for animation
   productModal.classList.remove('closing');
-  // force reflow then add open to trigger transition
-  void productModal.offsetWidth;
-  productModal.classList.add('open');
+  // If a source element was provided, animate from its bounds (drop/gota effect)
+  if (sourceEl && sourceEl.getBoundingClientRect) {
+    const rect = sourceEl.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    // estimate modal width as CSS allows (max 820 or vw - 40)
+    const modalWidth = Math.min(820, Math.max(200, vw - 40));
+    const tx = rect.left + rect.width / 2 - vw / 2;
+    const ty = rect.top + rect.height / 2 - vh / 2;
+    const s = rect.width / modalWidth;
+    productModal.style.setProperty('--tx', tx + 'px');
+    productModal.style.setProperty('--ty', ty + 'px');
+    productModal.style.setProperty('--s', s);
+    productModal.classList.add('from-thumb');
+    // force reflow then add open to transition from-thumb -> open
+    void productModal.offsetWidth;
+    productModal.classList.add('open');
+    // cleanup after transition
+    const cleanup = (e) => {
+      if (e.target !== productModal) return;
+      productModal.removeEventListener('transitionend', cleanup);
+      productModal.classList.remove('from-thumb');
+      productModal.style.removeProperty('--tx');
+      productModal.style.removeProperty('--ty');
+      productModal.style.removeProperty('--s');
+    };
+    productModal.addEventListener('transitionend', cleanup);
+  } else {
+    // force reflow then add open to trigger transition
+    void productModal.offsetWidth;
+    productModal.classList.add('open');
+  }
   productModal.setAttribute('aria-hidden', 'false');
 }
 
@@ -841,7 +870,7 @@ if (categoryHero) {
     scrollToCatalog();
   });
 }
-productGrid.addEventListener("click", (event) => { const addButton = event.target.closest(".add-button"); if (addButton) { addToCart(Number(addButton.closest("[data-product-id]").dataset.productId), addButton); return; } const card = event.target.closest("[data-product-id]"); if (card) openProductModal(Number(card.dataset.productId)); });
+productGrid.addEventListener("click", (event) => { const addButton = event.target.closest(".add-button"); if (addButton) { addToCart(Number(addButton.closest("[data-product-id]").dataset.productId), addButton); return; } const card = event.target.closest("[data-product-id]"); if (card) { const img = card.querySelector('img'); openProductModal(Number(card.dataset.productId), img || card); } });
 document.querySelector("#cart-items").addEventListener("click", (event) => {
   const removeButton = event.target.closest("[data-remove-id]");
   if (removeButton) {

@@ -224,6 +224,9 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
  100% { opacity: 1; transform: translateY(0); }
 }
 
+/* from-thumb: initial transform values when opening from a thumbnail */
+.product-modal.from-thumb { transition: transform .52s cubic-bezier(.2,.9,.2,1); transform: translate(calc(-50% + var(--tx,0px)), calc(-50% + var(--ty,0px))) scale(var(--s,1)); }
+
 @keyframes modalPop {
   0% { transform: translate(-50%, -46%) scale(.985) translateY(6px); opacity: 0; }
   60% { transform: translate(-50%, -51%) scale(1.03) translateY(-2px); opacity: 1; }
