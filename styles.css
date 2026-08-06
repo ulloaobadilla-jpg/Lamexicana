@@ -210,9 +210,19 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
 .product-modal.closing { opacity: 0; pointer-events: none; transform: translate(-50%, -46%) scale(.985) translateY(6px); animation: modalClose .36s ease both; }
 
 /* Premium image zoom on modal open */
-.product-modal-image img { transition: transform .8s cubic-bezier(.16,.84,.3,1), filter .55s ease; transform-origin: center center; will-change: transform; transform: scale(1) translateY(0); }
-.product-modal.open .product-modal-image img { transform: scale(1.12) translateY(-6%); filter: saturate(1.12) contrast(1.06); }
-.product-modal.closing .product-modal-image img { transform: scale(1) translateY(0); filter: none; }
+.product-modal-image img { transition: filter .55s ease; transform: none; transform-origin: center center; will-change: filter; }
+.product-modal.open .product-modal-image img { filter: saturate(1.08) contrast(1.04); }
+.product-modal.closing .product-modal-image img { filter: none; }
+
+/* Fade-in for modal sections so the whole dialog appears elegantly */
+.product-modal.open .product-modal-image,
+.product-modal.open .product-modal-copy { animation: fadeInUp .48s cubic-bezier(.16,.84,.3,1) both; }
+.product-modal.open .product-modal-copy { animation-delay: .12s; }
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(10px); }
+ 100% { opacity: 1; transform: translateY(0); }
+}
 
 @keyframes modalPop {
   0% { transform: translate(-50%, -46%) scale(.985) translateY(6px); opacity: 0; }
