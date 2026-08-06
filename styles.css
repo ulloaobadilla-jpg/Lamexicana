@@ -335,6 +335,13 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
     filter: blur(8px) saturate(1.02);
     transition: filter .72s ease, -webkit-filter .72s ease;
   }
+
+  /* Broader fallback: blur all top-level siblings except the modal and overlay to ensure consistent blur across browsers */
+  body.product-open > *:not(.product-modal):not(.product-modal-overlay) {
+    -webkit-filter: blur(8px) saturate(1.02) !important;
+    filter: blur(8px) saturate(1.02) !important;
+    transition: filter .72s ease !important;
+  }
 @media (max-width: 900px) {
   body { padding-top: 94px; }
   .site-header {
