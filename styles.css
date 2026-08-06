@@ -328,6 +328,13 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
     /* Keep strong but semi-transparent overlay on mobile so backdrop-filter remains visible */
     body.product-open .product-modal-overlay { background: rgba(23, 75, 59, 0.60) !important; }
 }
+
+  /* Apply a reliable blur to the page content when modal is open (fallback for devices that drop backdrop-filter) */
+  body.product-open main {
+    -webkit-filter: blur(8px) saturate(1.02);
+    filter: blur(8px) saturate(1.02);
+    transition: filter .72s ease, -webkit-filter .72s ease;
+  }
 @media (max-width: 900px) {
   body { padding-top: 94px; }
   .site-header {
