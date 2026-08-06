@@ -733,7 +733,7 @@ function openProductModal(productId, sourceEl) {
     const modalWidth = Math.min(820, Math.max(200, vw - 40));
     const tx = rect.left + rect.width / 2 - vw / 2;
     const ty = rect.top + rect.height / 2 - vh / 2;
-    const s = rect.width / modalWidth;
+    const s = Math.max(0.18, rect.width / modalWidth * 0.55);
     productModal.style.setProperty('--tx', tx + 'px');
     productModal.style.setProperty('--ty', ty + 'px');
     productModal.style.setProperty('--s', s);
