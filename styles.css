@@ -289,12 +289,14 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
 /* When a product is open on small screens, hide the floating header so modal content is unobstructed */
 @media (max-width: 760px) {
   body.product-open .site-header {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-8px);
-    pointer-events: none;
+    opacity: 0 !important;
+    transform: translateX(-50%) translateY(-8px) !important;
+    pointer-events: none !important;
     transition: opacity .18s ease, transform .18s ease;
   }
   body.product-open .site-header::before { opacity: 0 !important; }
+  /* Make overlay nearly opaque on mobile when product is open so header doesn't show through */
+  body.product-open .product-modal-overlay { background: rgba(23, 75, 59, 0.98) !important; }
 }
 @media (max-width: 900px) {
   body { padding-top: 94px; }
