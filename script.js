@@ -247,6 +247,23 @@ const adminSectionStoryImagePreview = document.querySelector("#admin-section-sto
 const adminStatsProducts = document.querySelector("#admin-stats-products");
 const adminStatsCategories = document.querySelector("#admin-stats-categories");
 const adminStatsSalsas = document.querySelector("#admin-stats-salsas");
+const heroImageUrlMigrationMap = {
+  "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1618040996337-56904b7850b9?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1543353071-087092ec3936?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1516685018646-5494f46b63b8?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1000&q=85"
+};
+
+function migrateHeroImages(images) {
+  if (!Array.isArray(images)) return Array.isArray(images) ? images : [];
+  return images.map((url) => heroImageUrlMigrationMap[url] || url);
+}
+
 const defaultSiteSettings = {
   promoText: "Hecho con sabor mexicano",
   promoHighlight: "Envío gratis dentro de la comuna de Pucón",
@@ -258,13 +275,13 @@ const defaultSiteSettings = {
   heroCtaUrl: "#catalogo",
   heroImage: "",
   heroImages: [
-    "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85",
-    "https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=1000&q=85",
-    "https://images.unsplash.com/photo-1618040996337-56904b7850b9?auto=format&fit=crop&w=1000&q=85",
-    "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=1000&q=85",
-    "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1000&q=85",
-    "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?auto=format&fit=crop&w=1000&q=85",
-    "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85"
+    "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=85",
+    "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=85",
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=85",
+    "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1000&q=85",
+    "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=1000&q=85",
+    "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1000&q=85",
+    "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1000&q=85"
   ],
   storyImage: "",
   storyTitle: "Recetas con alma.",
@@ -311,7 +328,12 @@ function loadSiteSettings() {
   try {
     const stored = JSON.parse(localStorage.getItem("lamexicana-site-settings") || "null");
     if (stored && typeof stored === "object") {
-      return { ...defaultSiteSettings, ...stored };
+      const merged = { ...defaultSiteSettings, ...stored };
+      const rawHeroImages = Array.isArray(merged.heroImages)
+        ? merged.heroImages
+        : normalizeList(merged.heroImages || merged.heroImage || defaultSiteSettings.heroImage);
+      merged.heroImages = migrateHeroImages(rawHeroImages.filter(Boolean));
+      return merged;
     }
   } catch (error) {
     console.warn("No se pudieron cargar los ajustes de la página", error);
@@ -1738,7 +1760,7 @@ const paymentInstructionsEl = document.querySelector("#payment-instructions");
   const categoryHero = document.querySelector("#category-hero");
   const heroGallery = document.querySelector("#hero-gallery");
   const heroImages = Array.isArray(settings.heroImages)
-    ? settings.heroImages.filter(Boolean)
+    ? migrateHeroImages(settings.heroImages.filter(Boolean))
     : normalizeList(settings.heroImages || settings.heroImage || defaultSiteSettings.heroImage);
 
   if (heroGallery && heroImages.length) {
