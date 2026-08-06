@@ -720,12 +720,14 @@ function openProductModal(productId) {
   productModal.classList.add("open");
   productModal.setAttribute("aria-hidden", "false");
   productModalOverlay.hidden = false;
+  document.body.classList.add('product-open');
 }
 
 function closeProductModal() {
   productModal.classList.remove("open");
   productModal.setAttribute("aria-hidden", "true");
   productModalOverlay.hidden = true;
+  document.body.classList.remove('product-open');
 }
 
 function openCart() {
