@@ -534,4 +534,35 @@ body.cart-is-open .assistant-panel { right: 440px; }.assistant-panel-head h3 { f
   .cart-item img { height: 56px; width: 56px; }
 }
 
+@media (max-width: 560px) {
+  .hero-image-wrap {
+    min-height: 220px;
+    max-height: 48vh;
+    overflow: hidden;
+  }
+  .hero-slide {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: scale(1.02) !important;
+    display: block !important;
+  }
+  .hero-slide.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: scale(1) !important;
+  }
+  .hero-slide img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    max-height: none !important;
+    display: block !important;
+  }
+}
+
 
