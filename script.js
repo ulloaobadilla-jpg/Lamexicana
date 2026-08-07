@@ -360,7 +360,8 @@ function showHeroSlide(index) {
     slide.style.opacity = isActive ? "1" : "0";
     slide.style.visibility = isActive ? "visible" : "hidden";
     slide.style.pointerEvents = isActive ? "auto" : "none";
-    slide.style.display = isActive ? "flex" : "none";
+    slide.style.display = "block";
+    slide.style.zIndex = isActive ? "2" : "1";
   });
 
   if (heroDots) {
