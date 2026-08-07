@@ -351,9 +351,15 @@ let activeHeroSlide = 0;
 let activeAdminProductId = null;
 
 function showHeroSlide(index) {
+  if (!heroSlides.length) return;
+
   activeHeroSlide = (index + heroSlides.length) % heroSlides.length;
   heroSlides.forEach((slide, slideIndex) => {
-    slide.classList.toggle("active", slideIndex === activeHeroSlide);
+    const isActive = slideIndex === activeHeroSlide;
+    slide.classList.toggle("active", isActive);
+    slide.style.opacity = isActive ? "1" : "0";
+    slide.style.visibility = isActive ? "visible" : "hidden";
+    slide.style.pointerEvents = isActive ? "auto" : "none";
   });
 
   if (heroDots) {
